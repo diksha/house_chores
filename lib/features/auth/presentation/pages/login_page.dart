@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:house_chores/core/theme/app_pallete.dart';
+import 'package:house_chores/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:house_chores/features/auth/presentation/pages/signup_page.dart';
 import 'package:house_chores/features/auth/presentation/widgets/auth_field.dart';
 import 'package:house_chores/features/auth/presentation/widgets/auth_gradient_button.dart';
@@ -59,7 +61,13 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const AuthGradientButton(buttonText: 'Sign In',),
+                  AuthGradientButton(buttonText: 'Sign In', onPressed: () {
+                    if(formKey.currentState!.validate()) {
+                      context.read<AuthBloc>().add(AuthSignUp(emailController.text, passwordController.text));
+                    }
+
+                  },
+                  ),
                   const SizedBox(
                     height: 20,
                   ),

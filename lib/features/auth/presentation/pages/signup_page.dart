@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:house_chores/core/theme/app_pallete.dart';
+import 'package:house_chores/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:house_chores/features/auth/presentation/pages/login_page.dart';
 import 'package:house_chores/features/auth/presentation/widgets/auth_field.dart';
 import 'package:house_chores/features/auth/presentation/widgets/auth_gradient_button.dart';
@@ -60,8 +62,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const AuthGradientButton(
+                   AuthGradientButton(
                     buttonText: 'Sign Up',
+                    onPressed: () {
+                      if(formKey.currentState!.validate()) {
+                        context.read<AuthBloc>().add(AuthSignUp(emailController.text, passwordController.text));
+                      }
+
+                    },
                   ),
                   const SizedBox(
                     height: 20,
@@ -91,24 +99,5 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             )));
 
-    //   Column(children: [
-    //   TextField(
-    //     controller: emailController,
-    //   ),
-    //   TextField(
-    //     controller: passwordController,
-    //     obscureText: true,
-    //   ),
-    //   MaterialButton(
-    //       onPressed: () async {
-    //         final sm = ScaffoldMessenger.of(context);
-    //         final authResponse = await supabase.auth.signUp(
-    //             password: passwordController.text, email: emailController.text);
-    //         sm.showSnackBar(SnackBar(
-    //             content: Text('Logged in: ${authResponse.user!.email}')));
-    //         print('Logged in as $authResponse');
-    //       },
-    //       child: Text("SignUp"))
-    // ]);
   }
 }
