@@ -1,4 +1,4 @@
-class Failure{
+class Failure {
   final String message;
-  Failure([this.message='Unexpected error has happened']);
+  Failure([this.message = 'Unexpected error has happened']);
 }
