@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:house_chores/core/error/failure.dart';
 import 'package:house_chores/core/usercase/usecase.dart';
-import 'package:house_chores/features/auth/domain/entities/user.dart';
+import 'package:house_chores/core/entities/user.dart';
 import 'package:house_chores/features/auth/domain/repository/auth_repository.dart';
 
 class UserSignUp implements Usecase<User, UserSignUpParams> {

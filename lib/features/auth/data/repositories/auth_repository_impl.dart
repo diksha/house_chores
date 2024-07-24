@@ -2,7 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:house_chores/core/error/exceptions.dart';
 import 'package:house_chores/core/error/failure.dart';
 import 'package:house_chores/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:house_chores/features/auth/domain/entities/user.dart';
+import 'package:house_chores/core/entities/user.dart';
 import 'package:house_chores/features/auth/domain/repository/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -31,5 +31,18 @@ class AuthRepositoryImpl implements AuthRepository {
       {required String email, required String password}) async {
     return _getUser(() async => await remoteDataSource.signUpWithEmailPassword(
         email: email, password: password));
+  }
+
+  @override
+  Future<Either<Failure, User>> currentUser() async {
+    try {
+      final user = await remoteDataSource.getCurrentUserData();
+      if (user == null) {
+        return left(Failure('User is not logged in'));
+      }
+      return right(user);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
   }
 }
